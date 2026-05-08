@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+model supplies {
+  id  String @id @default(uuid())
+  name      String?
+  manufacturer String
+  typefertilizer String
+  unitmeasure String
+  relationtype String
+  productiontype productiontype[]
+  
+}
+model productiontype {
+  id  String @id @default(uuid())
+  name      String?
+  harvesttime  DateTime @default(now())
+  recomendedinputs  String 
+  Supplies supplies @relation(fields: [recomendedinputs], references: [id], onDelete: Cascade)
+
+}
+model farmtopography {
+  id  String @id @default(uuid())
+  lotname String 
+  totalareaha String
+  idlot String 
+  Sublot sublot[]
+  
+  
+}
+model sublot {
+  id  String @id @default(uuid())
+  lotname String 
+  solotype String
+  totalareaha String 
+  farm String
+  Farmtopography farmtopography @relation(fields: [farm], references: [id], onDelete: Cascade)
+ 
+  
+}
+model harvestmanagement {
+  id  String @id @default(uuid())
+  cultureid Int 
+  sublotlist String
+  datetoplant DateTime @default(now())
+  datetoharvest DateTime @default(now())
+  harvestforecast DateTime?
+}
+model events {
+  id  String @id @default(uuid())
+ eventtype String 
+ harvestid String
+ sublotid String
+ timedate DateTime @default(now())
+ amountspent Int
+ useinputid Int
+
+}
+model sensor {
+  id  String @id @default(uuid())
+  typesensor String
+  installedsublotid String
+  sensorid String
+  Data data[]
+}
+model data {
+  id  String @id @default(uuid())
+  sensorid String
+  json String
+  timestamp DateTime @default(now())
+  Sensor sensor @relation(fields: [sensorid], references: [id], onDelete: Cascade)
+  
+
+}
