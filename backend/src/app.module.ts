@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { EquipmentsModule } from './equipments/equipments.module';
 import { CommentsModule } from './comments/comments.module';
 import { TelemetryModule } from './telemetry/telemetry.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { TelemetryModule } from './telemetry/telemetry.module';
     EquipmentsModule,
     CommentsModule,
     TelemetryModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

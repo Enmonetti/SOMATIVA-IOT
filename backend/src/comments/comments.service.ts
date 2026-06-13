@@ -31,11 +31,15 @@ export class CommentsService {
     }
 
     return prisma.comment.create({
-      data: createCommentDto,
+      data: {
+        description: createCommentDto.description,
+        equipmentId: createCommentDto.equipmentId,
+        userId: createCommentDto.userId,
+      },
     });
   }
 
-  async findAll() {
+  findAll() {
     return prisma.comment.findMany({
       include: {
         equipment: true,
@@ -44,7 +48,7 @@ export class CommentsService {
     });
   }
 
-  async findOne(id: number) {
+  findOne(id: number) {
     return prisma.comment.findUnique({
       where: { id },
       include: {
@@ -54,14 +58,14 @@ export class CommentsService {
     });
   }
 
-  async update(id: number, updateCommentDto: UpdateCommentDto) {
+  update(id: number, updateCommentDto: UpdateCommentDto) {
     return prisma.comment.update({
       where: { id },
       data: updateCommentDto,
     });
   }
 
-  async remove(id: number) {
+  remove(id: number) {
     return prisma.comment.delete({
       where: { id },
     });
