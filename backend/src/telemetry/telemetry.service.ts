@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 import { CreateTelemetryDto } from './dto/create-telemetry.dto';
 import { UpdateTelemetryDto } from './dto/update-telemetry.dto';
 
+const prisma = new PrismaClient();
+
 @Injectable()
 export class TelemetryService {
+
   create(createTelemetryDto: CreateTelemetryDto) {
-    return 'This action adds a new telemetry';
+    return prisma.telemetry.create({
+      data: createTelemetryDto,
+    });
   }
 
   findAll() {
-    return `This action returns all telemetry`;
+    return prisma.telemetry.findMany({
+      include: {
+        equipment: true,
+      },
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} telemetry`;
+    return prisma.telemetry.findUnique({
+      where: { id },
+    });
   }
 
   update(id: number, updateTelemetryDto: UpdateTelemetryDto) {
-    return `This action updates a #${id} telemetry`;
+    return prisma.telemetry.update({
+      where: { id },
+      data: updateTelemetryDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} telemetry`;
+    return prisma.telemetry.delete({
+      where: { id },
+    });
   }
 }

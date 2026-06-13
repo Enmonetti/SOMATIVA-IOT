@@ -1,1 +1,6 @@
-export class CreateEquipmentDto {}
+export class CreateEquipmentDto {
+  name: string;
+  description: string;
+  imageUrl: string;
+  status: boolean;
+}
