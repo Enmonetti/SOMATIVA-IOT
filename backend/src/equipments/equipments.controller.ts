@@ -5,10 +5,12 @@ import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 
 @Controller('equipments')
 export class EquipmentsController {
-  constructor(private readonly equipmentsService: EquipmentsService) {}
+  constructor(private readonly equipmentsService: EquipmentsService) { }
 
   @Post()
   create(@Body() createEquipmentDto: CreateEquipmentDto) {
+    console.log('BODY CONTROLLER:', createEquipmentDto);
+
     return this.equipmentsService.create(createEquipmentDto);
   }
 
@@ -23,7 +25,10 @@ export class EquipmentsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEquipmentDto: UpdateEquipmentDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateEquipmentDto: UpdateEquipmentDto,
+  ) {
     return this.equipmentsService.update(+id, updateEquipmentDto);
   }
 

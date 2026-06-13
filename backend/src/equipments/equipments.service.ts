@@ -8,14 +8,22 @@ const prisma = new PrismaClient();
 @Injectable()
 export class EquipmentsService {
 
-  create(createEquipmentDto: CreateEquipmentDto) {
-    return prisma.equipment.create({
-      data: createEquipmentDto,
+  async create(createEquipmentDto: CreateEquipmentDto) {
+
+    console.log('DTO SERVICE:', createEquipmentDto);
+
+    return await prisma.equipment.create({
+      data: {
+        name: createEquipmentDto.name,
+        description: createEquipmentDto.description,
+        imageUrl: createEquipmentDto.imageUrl,
+        status: createEquipmentDto.status,
+      },
     });
   }
 
-  findAll() {
-    return prisma.equipment.findMany({
+  async findAll() {
+    return await prisma.equipment.findMany({
       include: {
         comments: true,
         telemetry: true,
@@ -23,8 +31,8 @@ export class EquipmentsService {
     });
   }
 
-  findOne(id: number) {
-    return prisma.equipment.findUnique({
+  async findOne(id: number) {
+    return await prisma.equipment.findUnique({
       where: { id },
       include: {
         comments: true,
@@ -33,15 +41,15 @@ export class EquipmentsService {
     });
   }
 
-  update(id: number, updateEquipmentDto: UpdateEquipmentDto) {
-    return prisma.equipment.update({
+  async update(id: number, updateEquipmentDto: UpdateEquipmentDto) {
+    return await prisma.equipment.update({
       where: { id },
       data: updateEquipmentDto,
     });
   }
 
-  remove(id: number) {
-    return prisma.equipment.delete({
+  async remove(id: number) {
+    return await prisma.equipment.delete({
       where: { id },
     });
   }
