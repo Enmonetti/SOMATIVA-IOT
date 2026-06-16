@@ -20,7 +20,7 @@ model User {
   password  String
 
   profileId Int
-  profile   Profile @relation(fields: [profileId], references: [id])
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   comments Comment[]
 }
@@ -47,8 +47,8 @@ model Comment {
   equipmentId Int
   userId      Int
 
-  equipment Equipment @relation(fields: [equipmentId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
+  equipment Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Telemetry {
@@ -61,5 +61,5 @@ model Telemetry {
   timestamp DateTime @default(now())
 
   equipmentId Int
-  equipment Equipment @relation(fields: [equipmentId], references: [id])
+  equipment Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
 }
